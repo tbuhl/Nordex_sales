@@ -1,0 +1,18 @@
+# Python cache/bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+
+# Temporary Excel lock files
+~$*.xlsx
+~$*.xlsm
+~$*.xls

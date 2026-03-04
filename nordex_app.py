@@ -3035,14 +3035,17 @@ def render_across_years(orders: pd.DataFrame, platforms: pd.DataFrame) -> None:
             st.plotly_chart(fig, width="stretch")
 
     with tab_rotor:
-        rot = platforms[(platforms["platform"] != "Unknown") & (platforms["slot_mw"] > 0)].copy()
+        # Rotor statistics should include all parsed rotor entries, including rows
+        # where platform label is unknown, so minimum values are not hidden.
+        rot = platforms.copy()
+        rot_for_mw = platforms[(platforms["platform"] != "Unknown") & (platforms["slot_mw"] > 0)].copy()
         rotor_stats = (
             rot.dropna(subset=["rotor_m"])
             .groupby("order_year", as_index=False)
             .agg(rotor_avg=("rotor_m", "mean"), rotor_min=("rotor_m", "min"), rotor_max=("rotor_m", "max"))
         )
         mw_stats = (
-            rot.dropna(subset=["mw_rating"])
+            rot_for_mw.dropna(subset=["mw_rating"])
             .groupby("order_year", as_index=False)
             .agg(mw_avg=("mw_rating", "mean"), mw_min=("mw_rating", "min"), mw_max=("mw_rating", "max"))
         )

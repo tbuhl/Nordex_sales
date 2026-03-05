@@ -2269,9 +2269,23 @@ def render_overall_economics(economy: pd.DataFrame, stock_monthly: pd.DataFrame,
     sales_projects_metric = find_metric(["sales", "projects"]) or find_metric(["sales"])
     sales_service_metric = find_metric(["sales", "service"]) or find_metric(["staff", "cost"])
 
-    order_intake_beur_metric = find_metric(["order", "intake", "bneur"]) or find_metric(["order", "intake", "me"])
-    order_backlog_wt_beur_metric = find_metric(["order", "backlog", "wind", "bneur"]) or find_metric(["order", "backlog"])
-    order_backlog_service_beur_metric = find_metric(["order", "backlog", "service", "bneur"]) or find_metric(["ebit"])
+    order_intake_beur_metric = (
+        find_metric(["order", "intake", "bneur"])
+        or find_metric(["order", "intake", "meur"])
+        or find_metric(["order", "intake", "me"])
+        or find_metric(["order", "intake"])
+    )
+    order_backlog_wt_beur_metric = (
+        find_metric(["order", "backlog", "wind", "bneur"])
+        or find_metric(["order", "backlog", "projects", "meur"])
+        or find_metric(["order", "backlog", "total", "meur"])
+        or find_metric(["order", "backlog"])
+    )
+    order_backlog_service_beur_metric = (
+        find_metric(["order", "backlog", "service", "bneur"])
+        or find_metric(["order", "backlog", "service", "meur"])
+        or find_metric(["order", "backlog", "service"])
+    )
 
     order_intake_mw_metric = find_metric(["order", "intake", "mw"]) or find_metric(["installed", "capacity", "mw"])
     order_backlog_mw_metric = find_metric(["order", "backlog", "wind", "mw"]) or find_metric(["number", "turbines"])
